@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891377126243.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - docker build -t pizzaria-backend .
+      - docker tag pizzaria-backend:latest 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:latest
+  post_build:
+    commands:
+      - docker push 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:latest
