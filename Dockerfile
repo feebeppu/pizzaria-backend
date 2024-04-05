@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN rm -rf node_modules
-RUN yarn install --production
+RUN yarn 
 
 CMD ["yarn", "start:dev"]
 
