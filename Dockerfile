@@ -7,6 +7,6 @@ COPY . .
 RUN rm -rf node_modules
 RUN yarn install --production
 
-CMD ["node", "dist/src/main.js"]
+CMD ["yarn", "start:dev"]
 
 EXPOSE 3000
