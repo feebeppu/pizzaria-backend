@@ -1,33 +1,33 @@
-# build stage
-FROM node:18-alpine AS build
+FROM node:19-alpine as base
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json yarn.lock ./
 
-RUN yarn
+RUN yarn install --frozen-lockfile
 
-COPY . . 
+COPY . .
+
+FROM node:19-alpine as build
+
+WORKDIR /usr/src/app
+
+COPY package*.json yarn.lock tsconfig.json ./
+
+COPY --from=base /usr/src/app/node_modules ./node_modules
+COPY . .
 
 RUN yarn build
 
-#prod stage
+ENV NODE_ENV production
 
-FROM node:18-alpine 
+RUN yarn install --production=true --frozen-lockfile && yarn cache clean
 
-WORKDIR /usr/src/app
+FROM node:19-alpine as production
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
+COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist ./dist
 
-COPY package*.json ./
+EXPOSE 3001
 
-RUN yarn --only=production
-
-RUN rm package*.json
-
-EXPOSE 3000
-
-CMD ["node", "dist/main.js"]
+ENTRYPOINT ["node", "dist/src/main.js"]
