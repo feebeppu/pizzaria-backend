@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class AuthLoginDTO {
-  @IsEmail(undefined, { message: 'Email is invalid' })
+  @IsEmail(undefined)
   email: string;
 
   @IsNotEmpty({ message: 'Password cannot be empty' })
