@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: pizzaria-backend
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: pizzaria-backend

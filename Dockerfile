@@ -1,4 +1,4 @@
-FROM node:19-alpine as base
+FROM node:latest as base
 
 WORKDIR /usr/src/app
 
@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-FROM node:19-alpine as build
+FROM node:latest as build
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,7 @@ ENV NODE_ENV production
 
 RUN yarn install --production=true --frozen-lockfile && yarn cache clean
 
-FROM node:19-alpine as production
+FROM node:latest as production
 
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist ./dist
