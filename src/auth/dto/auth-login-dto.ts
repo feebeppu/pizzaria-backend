@@ -4,6 +4,6 @@ export class AuthLoginDTO {
   @IsEmail(undefined)
   email: string;
 
-  @IsNotEmpty({ message: 'Password cannot be empty' })
+  @IsNotEmpty()
   password: string;
 }
