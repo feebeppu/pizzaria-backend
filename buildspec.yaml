@@ -7,8 +7,9 @@ phases:
   build:
     commands:
       - export COMMIT_SHA=$(git rev-parse --short HEAD)
+      - export IMAGE_TAG=891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:$COMMIT_SHA
       - docker build -t pizzaria-backend .
-      - docker tag pizzaria-backend:latest 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:$COMMIT_SHA
+      - docker tag pizzaria-backend:latest $IMAGE_TAG
   post_build:
     commands:
-      - docker push 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:$COMMIT_SHA
+      - docker push $IMAGE_TAG
