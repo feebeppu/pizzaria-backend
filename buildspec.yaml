@@ -1,15 +1,27 @@
 version: 0.2
-
 phases:
+  install:
+    runtime-versions:
+      docker: 18
   pre_build:
     commands:
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891377126243.dkr.ecr.us-east-1.amazonaws.com
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region us-east-1 --no-include-email)
+      - REPOSITORY_URI=891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=$(COMMIT_HASH:=latest)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - docker build -t pizzaria-backend .
-      - docker tag pizzaria-backend:latest 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:$IMAGE_TAG
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
-      - docker push 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:latest
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+artifacts:
+  files: imagedefinitions.json   
