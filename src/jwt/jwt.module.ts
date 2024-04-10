@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-
 import { jwtOptions } from './jwt.config';
 import { JWTService } from './jwt.service';
 

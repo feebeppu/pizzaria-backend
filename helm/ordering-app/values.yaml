@@ -1,0 +1,5 @@
+postgresql:
+  architecture: replication
+  auth:
+    postgresPassword: '123456'
+    
