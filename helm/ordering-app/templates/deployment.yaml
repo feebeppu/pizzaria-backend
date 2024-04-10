@@ -13,7 +13,7 @@ spec:
         app: pizzaria-backend
     spec:
       containers:
-        - image: 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:latest
+        - image: docker pull 891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend
           name: pizzaria-backend
           ports:
             - containerPort: 3000
