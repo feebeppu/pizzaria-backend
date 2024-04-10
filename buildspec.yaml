@@ -21,6 +21,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"hello-world","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - kubectl set image deployment/pizzaria-backend pizzaria-backend=$REPOSITORY_URI:$IMAGE_TAG
+      - kubectl apply -f ./helm/ordering-app/templates
+      - kubectl set image deployment/pizzaria-backend pizzaria-backend=891377126243.dkr.ecr.us-east-1.amazonaws.com/pizzaria-backend:$IMAGE_TAG
 artifacts:
   files: imagedefinitions.json   
