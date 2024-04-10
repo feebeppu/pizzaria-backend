@@ -8,6 +8,7 @@ import { JWTService } from 'src/jwt/jwt.service';
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
+    
     private readonly jwtService: JWTService,
   ) {}
 
