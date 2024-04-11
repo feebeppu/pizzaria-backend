@@ -21,7 +21,6 @@ export class UsersController {
   }
 
   @Get('detail')
-  // Quando essa rota for atingida, o Guard invocará automaticamente nossa strategy jwt usando o passport, validará o JWT e atribuirá ao user, a propriedade ao Request objeto.
   @UseGuards(JwtAuthGuard)
   async detailCurrentUser(@CurrentUser() currentUser: UserEntity) {
     return await this.userService.detailCurrentUser(currentUser);
