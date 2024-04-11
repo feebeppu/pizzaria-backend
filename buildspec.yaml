@@ -18,7 +18,7 @@ phases:
     commands:
       - echo Logging in to Amazon EKS...
       - aws sts get-caller-identity
-      - aws eks update-kubeconfig --region us-east-1 --name ordering-app 
+      - aws eks update-kubeconfig --name ordering-app --region us-east-1 
       - echo check config 
       - kubectl config view --minify
       - echo check kubectl access
